@@ -118,7 +118,16 @@ mod tests {
 
     #[test]
     fn finds_path_and_marks_dots() {
+        // ##    #
+        // #  #i #
+        // #  O## 
+        //    #   
         let input = "##    #\n#  #i #\n#  O## \n   #   ";
+
+        // ##... #
+        // # .#i #
+        // # .O## 
+        //    #   
         let expected = "##... #\n# .#i #\n# .O## \n   #   ";
         let out = process_map(input);
         assert_eq!(out, expected);
@@ -133,13 +142,9 @@ mod tests {
 
     #[test]
     fn wraps_toroidally() {
-        let input = "i  #O";
+        let input = " i  #O";
+        let expected = ".i  #O";
         let out = process_map(input);
-        if out.contains('.') {
-            assert!(out.starts_with('i'));
-            assert!(out.ends_with('O'));
-        } else {
-            assert_eq!(out, input);
-        }
+        assert_eq!(out, expected);
     }
 }
