@@ -29,27 +29,20 @@ fn process_map(input: &str) -> String {
 
     let mut grid: Vec<Vec<char>> = lines.iter().map(|l| l.chars().collect()).collect();
 
-    let mut start: Option<(usize, usize)> = None;
-    let mut goal: Option<(usize, usize)> = None;
+    let mut start = None;
+    let mut goal = None;
     for y in 0..height {
         for x in 0..width {
-            let c = grid[y][x];
-            if c == 'i' {
-                start = Some((x, y));
-            } else if c == 'O' {
-                goal = Some((x, y));
+            match grid[y][x] {
+                'i' => start = Some((x, y)),
+                'O' => goal = Some((x, y)),
+                _ => {}
             }
         }
     }
 
-    let (sx, sy) = match start {
-        Some(p) => p,
-        None => return lines.join("\n"),
-    };
-    let (gx, gy) = match goal {
-        Some(p) => p,
-        None => return lines.join("\n"),
-    };
+    let Some((sx, sy)) = start else { return lines.join("\n") };
+    let Some((gx, gy)) = goal else { return lines.join("\n") };
 
     let mut visited = vec![vec![false; width]; height];
     let mut prev: Vec<Vec<Option<(usize, usize)>>> = vec![vec![None; width]; height];
